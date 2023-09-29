@@ -13,7 +13,7 @@ Install this package alongside your prefered Python environment.
 pip install -e .
 ```
 
-To be able to run the notebooks, this has to be an environment with `ewatercycle` already installed.
+To be able to run the demo notebook, this has to be an environment with `ewatercycle` already installed.
 
 ## Implementing your own model
 
@@ -28,7 +28,7 @@ In this repository is the [`Dockerfile`](Dockerfile), which contains all the ste
 
 Additionally, the container installs [grpc4bmi](https://github.com/eWaterCycle/grpc4bmi). Grpc4bmi allows communication with the model's BMI when it is packaged in the container, and is thus essential to add to the container.
 
-### Building the container
+### Building and testing the container
 
 If you have docker installed, you can build the container by doing:
 
@@ -36,6 +36,28 @@ If you have docker installed, you can build the container by doing:
 docker build -t NAME:VERSION .
 ```
 
+If everything was implemented correctly up to now, you can try the following snippet:
+
+```py
+from grpc4bmi.bmi_grpc_server import BmiServer
+from mymodel.bmi import MyModelBmi
+
+server = BmiServer(MyModelBmi(), debug=True)
+print(server.getComponentName(0,0))
+```
+should return*:
+```
+name: "mymodel"
+```
+\* (if `MyModelBmi.get_component_name` is available before initialization).
+
+If nothing went wrong, running the following command in your terminal (with the eWaterCycle environment active) will start the grpc4bmi server:
+
+```sh
+run-bmi-server --name "mymodel.bmi.MyModelBmi" --port 55555 --debug
+```
+
+### Publishing the container
 To build this container and push it to the Github container registry you need to set up an acces token first. Information on this is available on the [Github Packages documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
 
 When you are set up you can build and push the container as such:
@@ -47,9 +69,6 @@ docker push ghcr.io/ewatercycle/leakybucket-grpc4bmi:v0.1.0
 
 It will then become available on [Github Packages](https://github.com/eWaterCycle/leakybucket-bmi/pkgs/container/leakybucket-grpc4bmi).
 Note that you still have to mark the container as public before others can access it.
-
-
-
 
 ## License
 
