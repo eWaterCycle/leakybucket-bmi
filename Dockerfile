@@ -11,20 +11,27 @@
 #
 # To build the image, run
 #
-#   docker build --tag leakybucket:v0.0.1 .
+#   docker build --tag leakybucket-grpc4bmi:v0.0.1 .
 #
 # If you use podman, you may need to add `--format docker`
 #
-#   docker build --format docker --tag leakybucket:v0.0.1 .
+#   docker build --format docker --tag leakybucket-grpc4bmi:v0.0.1 .
+#
+# To talk to the model from outside the container, use grpc4bmi client
+#
+#   from grpc4bmi.bmi_client_docker import BmiClientDocker
+#   model = BmiClientDocker('leakybucket-grpc4bmi:v0.0.1', work_dir='/tmp', delay=1)
 #
 # To debug the container, you can override the grpc4bmi command
 #
-#   docker run --tty --interactive leakybucket:v0.0.1 bash
+#   docker run --tty --interactive leakybucket-grpc4bmi:v0.0.1 bash
 #
 # This will spawn a new bash terminal running inside the docker container
 
 FROM mambaorg/micromamba:1.3.1
 
+# Here you can point to the source repository of this Dockerfile:
+LABEL org.opencontainers.image.source="https://github.com/eWaterCycle/leakybucket-bmi"
 
 # Install Python + additional conda-dependencies,
 # Here I added cartopy as an example
@@ -38,3 +45,9 @@ ARG MAMBA_DOCKERFILE_ACTIVATE=1  # (otherwise python will not be found)
 # Install leakybucket.LeakyBucketBmi
 COPY . /opt/leakybucket
 RUN pip install -e /opt/leakybucket/
+
+RUN pip install grpc4bmi==0.4.0
+
+# Default command should be to run GRPC4BMI server
+# Don't override micromamba's entrypoint as that activates conda!
+CMD run-bmi-server --name "leakybucket.LeakyBucketBmi" --port 55555 --debug
