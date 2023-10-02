@@ -10,7 +10,7 @@ The goal is to plug this model into [eWaterCycle](https://ewatercycle.readthedoc
 Install this package alongside your prefered Python environment.
 
 ```console
-pip install -e .
+pip install leakybucket
 ```
 
 To be able to run the demo notebook, this has to be an environment with `ewatercycle` already installed.
