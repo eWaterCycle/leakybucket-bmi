@@ -36,10 +36,12 @@ If you have docker installed, you can build the container by doing:
 docker build -t leakybucket-grpc4bmi:v0.0.1 .
 ```
 
-If nothing went wrong, running the following command in your terminal (with the eWaterCycle environment active) will start the grpc4bmi server and print the port:
+If nothing went wrong, running the following command in your terminal will start the grpc4bmi server on local port 55555:
 ```sh
-docker run --tty --interactive leakybucket-grpc4bmi:v0.0.1 bash
+docker run -p 55555:55555 leakybucket-grpc4bmi:v0.0.1
 ```
+
+The running server can be called with the [grpc4bmi client](https://grpc4bmi.readthedocs.io/en/latest/usage.html).
 
 ### Publishing the container
 To build this container and push it to the Github container registry you need to set up an acces token first. Information on this is available on the [Github Packages documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
