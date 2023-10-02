@@ -33,28 +33,12 @@ Additionally, the container installs [grpc4bmi](https://github.com/eWaterCycle/g
 If you have docker installed, you can build the container by doing:
 
 ```
-docker build -t NAME:VERSION .
+docker build -t leakybucket-grpc4bmi:v0.0.1 .
 ```
 
-If everything was implemented correctly up to now, you can try the following snippet:
-
-```py
-from grpc4bmi.bmi_grpc_server import BmiServer
-from mymodel.bmi import MyModelBmi
-
-server = BmiServer(MyModelBmi(), debug=True)
-print(server.getComponentName(0,0))
-```
-should return*:
-```
-name: "mymodel"
-```
-\* (if `MyModelBmi.get_component_name` is available before initialization).
-
-If nothing went wrong, running the following command in your terminal (with the eWaterCycle environment active) will start the grpc4bmi server:
-
+If nothing went wrong, running the following command in your terminal (with the eWaterCycle environment active) will start the grpc4bmi server and print the port:
 ```sh
-run-bmi-server --name "mymodel.bmi.MyModelBmi" --port 55555 --debug
+docker run --tty --interactive leakybucket-grpc4bmi:v0.0.1 bash
 ```
 
 ### Publishing the container
