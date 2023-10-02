@@ -19,7 +19,11 @@ class LeakyBucketBmi(LumpedBmi):
         # Get the input data:
         #   Note: the precipitation input is in [kg m-2 s-1], temperature in [K]
         self.precipitation = utils.load_var(self.config["precipitation_file"], "pr")
-        self.temperature = utils.load_var(self.config["temperature_file"], "tas")
+        
+        # Temperature is not used in this implementation, but is available if you
+        #    want to write your own model. You can load it by uncommenting the next line
+        # self.temperature = utils.load_var(self.config["temperature_file"], "tas")
+
         self.time_data = self.precipitation["time"]
 
         # time step size in seconds (to be able to do unit conversions).
