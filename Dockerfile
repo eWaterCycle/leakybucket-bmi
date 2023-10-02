@@ -44,7 +44,7 @@ ARG MAMBA_DOCKERFILE_ACTIVATE=1  # (otherwise python will not be found)
 
 # Install leakybucket.LeakyBucketBmi
 COPY . /opt/leakybucket
-RUN pip install -e /opt/leakybucket/
+RUN pip install /opt/leakybucket/
 
 RUN pip install grpc4bmi==0.4.0
 
