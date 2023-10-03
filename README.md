@@ -36,12 +36,20 @@ If you have docker installed, you can build the container by doing:
 docker build -t leakybucket-grpc4bmi:v0.0.1 .
 ```
 
-If nothing went wrong, running the following command in your terminal will start the grpc4bmi server on local port 55555:
-```sh
-docker run -p 55555:55555 leakybucket-grpc4bmi:v0.0.1
+To start the container and test it, run the following command in your Python terminal:
+
+```python
+from grpc4bmi.bmi_client_docker import BmiClientDocker
+model = BmiClientDocker('leakybucket-grpc4bmi:v0.0.1', work_dir='/tmp')
+model.get_component_name()
+del model
 ```
 
-The running server can be called with the [grpc4bmi client](https://grpc4bmi.readthedocs.io/en/latest/usage.html).
+If somehing went wrong, you can look around in the container by running:
+
+```sh
+docker run -it leakybucket-grpc4bmi:v0.0.1 bash
+```
 
 ### Publishing the container
 To build this container and push it to the Github container registry you need to set up an acces token first. Information on this is available on the [Github Packages documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry).
