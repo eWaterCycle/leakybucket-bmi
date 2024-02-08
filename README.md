@@ -3,6 +3,7 @@
 This repository is a template for creating a new hydrological model in Python, using the [Basic Model Interface (BMI)](https://bmi.readthedocs.io/).
 
 The goal is to plug this model into [eWaterCycle](https://ewatercycle.readthedocs.io/), and as such forcing data and configuration file handling will be performed using eWaterCycle.
+This is implemented in the [ewatercycle-leakybucket repository](https://github.com/eWaterCycle/ewatercycle-leakybucket).
 
 
 ## Installation
